@@ -1,0 +1,41 @@
+:root{
+  --bg:#0b0d12; --panel:#141821; --card:#1a1f2b; --line:#262c3a;
+  --text:#e8ecf3; --muted:#8b94a7; --accent:#7c5cff; --accent2:#22d3ee; --ok:#34d399;
+  --r:16px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{
+  background:radial-gradient(900px 500px at 50% -20%,#2a1a5c 0,transparent 55%),var(--bg);
+  color:var(--text);
+  font:15px/1.55 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+}
+.hub{max-width:520px;margin:0 auto;padding:28px 18px 48px;min-height:100vh;display:flex;flex-direction:column}
+.hub-head{text-align:center;margin-bottom:28px}
+.logo{font-size:48px;line-height:1}
+.hub-head h1{margin:10px 0 6px;font-size:26px;letter-spacing:.02em}
+.sub{margin:0;color:var(--muted);font-size:14px}
+.cards{display:flex;flex-direction:column;gap:14px;flex:1}
+.card{
+  position:relative;display:block;padding:22px 20px;border-radius:var(--r);
+  background:var(--panel);border:1px solid var(--line);text-decoration:none;color:inherit;
+  transition:.2s;
+}
+.card:hover,.card:focus-visible{border-color:#4a5370;transform:translateY(-1px)}
+.card.featured{
+  background:linear-gradient(145deg,rgba(124,92,255,.22),rgba(26,31,43,.95) 55%);
+  border-color:rgba(124,92,255,.55);
+  box-shadow:0 8px 32px rgba(124,92,255,.18);
+}
+.badge{
+  position:absolute;top:14px;right:14px;font-size:11px;font-weight:700;
+  padding:3px 9px;border-radius:99px;background:var(--accent);color:#fff;
+}
+.icon{font-size:28px;margin-bottom:8px}
+.card h2{margin:0 0 6px;font-size:20px}
+.card p{margin:0 0 14px;color:var(--muted);font-size:13.5px}
+.cta{font-weight:600;color:var(--accent2);font-size:14px}
+.cta.muted{color:var(--muted);font-weight:500}
+.hub-foot{margin-top:28px;text-align:center;color:var(--muted);font-size:12px}
+.hub-foot p{margin:4px 0}
+.hub-foot a{color:var(--accent2)}

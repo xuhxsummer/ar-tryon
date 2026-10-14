@@ -4,109 +4,40 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#0b0d12" />
-<title>AR 虚拟试衣 · Web Demo</title>
+<meta name="description" content="AI 虚拟试衣 · Kolors 免费试穿" />
+<title>虚拟试衣 · AI / AR</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👗</text></svg>" />
-<link rel="stylesheet" href="./styles.css" />
+<link rel="stylesheet" href="./hub.css" />
 </head>
 <body>
-<div id="loading" class="loading">
-  <div class="loading-card">
-    <div class="spinner"></div>
-    <h2>正在加载 AR 试衣引擎</h2>
-    <ul id="loadSteps" class="steps">
-      <li data-step="assets">服装素材</li>
-      <li data-step="wasm">MediaPipe 运行时</li>
-      <li data-step="pose">姿态模型（Pose Landmarker）</li>
-      <li data-step="seg">人像分割模型（Image Segmenter）</li>
-    </ul>
-    <p class="hint">首次加载需下载约 10–30MB 模型，请稍候…</p>
-  </div>
-</div>
+  <main class="hub">
+    <header class="hub-head">
+      <div class="logo">👗</div>
+      <h1>虚拟试衣</h1>
+      <p class="sub">上传全身照，一键换上衣服 · 手机友好</p>
+    </header>
 
-<header class="topbar">
-  <div class="brand"><span class="logo">👗</span> AR 虚拟试衣 <small>Web Demo</small></div>
-  <div class="status">
-    <span class="pill" id="fpsPill">FPS --</span>
-    <span class="pill" id="modelPill">模型：未加载</span>
-    <span class="pill" id="trackPill">未检测到人体</span>
-  </div>
-</header>
+    <div class="cards">
+      <a class="card featured" href="./ai.html">
+        <span class="badge">推荐</span>
+        <div class="icon">✨</div>
+        <h2>AI 试衣</h2>
+        <p>Kwai Kolors 生成真实试穿效果，适合照片换装</p>
+        <span class="cta">开始试衣 →</span>
+      </a>
 
-<main class="layout">
-  <section class="stage-wrap">
-    <div id="stage" class="stage">
-      <canvas id="view"></canvas>
-      <video id="video" playsinline muted></video>
-      <div id="placeholder" class="placeholder">
-        <div class="ph-icon">📷</div>
-        <p>点击「开启摄像头」开始试衣</p>
-        <p class="sub">请站在距离摄像头 1.5–2.5 米处，露出上半身至髋部</p>
-      </div>
-      <div id="dropZone" class="drop-zone" title="拖入或点击上传服装图片">
-        <input id="fileInput" type="file" accept="image/*" hidden />
-        <span class="dz-icon">⬆️</span>
-        <span><b>拖入衣服图片换装</b><br /><small>或点击选择图片（PNG 透明图效果最佳）</small></span>
-      </div>
-      <div id="dropOverlay" class="drop-overlay"><div>松开鼠标，立即换上这件衣服 👕</div></div>
-      <div id="countdown" class="countdown"></div>
-      <div id="toast" class="toast"></div>
-    </div>
-    <div class="cam-bar">
-      <button id="btnCam" class="btn primary">开启摄像头</button>
-      <select id="facing" class="select" title="摄像头">
-        <option value="environment">后置摄像头优先</option>
-        <option value="user">前置摄像头</option>
-      </select>
-      <button id="btnCalib" class="btn" disabled>校准</button>
-      <button id="btnShot" class="btn" disabled>拍照</button>
-    </div>
-    <p id="error" class="error" hidden></p>
-  </section>
-
-  <aside class="panel">
-    <div class="card">
-      <h3>选择服装</h3>
-      <div id="garments" class="garments"></div>
-      <label class="check small"><input type="checkbox" id="optRemoveBg" checked /> 上传图片时自动去除纯色背景</label>
-      <p id="uploadNote" class="muted"></p>
+      <a class="card" href="./ar.html">
+        <div class="icon">📷</div>
+        <h2>实时贴图（旧）</h2>
+        <p>摄像头 + MediaPipe 姿态贴图，实时预览</p>
+        <span class="cta muted">打开 AR Demo →</span>
+      </a>
     </div>
 
-    <div class="card">
-      <h3>显示与跟踪</h3>
-      <div class="toggles">
-        <label class="switch"><input type="checkbox" id="optMirror" checked /><span></span>镜像</label>
-        <label class="switch"><input type="checkbox" id="optSkeleton" /><span></span>显示骨架</label>
-        <label class="switch"><input type="checkbox" id="optMask" /><span></span>显示分割遮罩</label>
-        <label class="switch"><input type="checkbox" id="optSmooth" checked /><span></span>平滑</label>
-        <label class="switch"><input type="checkbox" id="optClip" checked /><span></span>按人像裁剪服装</label>
-        <label class="switch"><input type="checkbox" id="optArms" checked /><span></span>手臂遮挡</label>
-        <label class="switch"><input type="checkbox" id="optSleeve" checked /><span></span>袖子跟随手臂</label>
-        <label class="switch"><input type="checkbox" id="optMesh" /><span></span>显示变形网格</label>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>微调</h3>
-      <label class="range">透明度 <output id="opacityVal">95%</output><input type="range" id="opacity" min="0.2" max="1" step="0.01" value="0.95" /></label>
-      <label class="range">缩放 <output id="scaleVal">1.00×</output><input type="range" id="scale" min="0.7" max="1.5" step="0.01" value="1" /></label>
-      <label class="range">上下偏移 <output id="offsetVal">0</output><input type="range" id="offset" min="-0.5" max="0.5" step="0.01" value="0" /></label>
-      <label class="range">平滑强度 <output id="smoothVal">中</output><input type="range" id="smoothLvl" min="0" max="2" step="1" value="1" /></label>
-      <button id="btnReset" class="btn ghost small">重置微调</button>
-    </div>
-
-    <div class="card">
-      <h3>模型</h3>
-      <label class="row">姿态模型
-        <select id="poseVariant" class="select">
-          <option value="full">Full（均衡，推荐）</option>
-          <option value="heavy">Heavy（更准，更慢）</option>
-        </select>
-      </label>
-      <p id="calibInfo" class="muted">未校准：使用默认身体比例。</p>
-      <p class="muted">推理：<span id="inferMs">--</span> · 分割：<span id="segState">--</span></p>
-    </div>
-  </aside>
-</main>
-<script type="module" src="./src/app.js"></script>
+    <footer class="hub-foot">
+      <p>图片仅发送至 Hugging Face Kolors Space 处理，不经过本站服务器。</p>
+      <p><a href="https://huggingface.co/spaces/Kwai-Kolors/Kolors-Virtual-Try-On" target="_blank" rel="noopener">官方 Space</a> · 免费，高峰可能排队</p>
+    </footer>
+  </main>
 </body>
 </html>

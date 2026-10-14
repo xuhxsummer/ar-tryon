@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0b0d12" />
+<meta name="description" content="AI 虚拟试衣 · Kwai Kolors" />
+<title>AI 试衣 · Kolors</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>" />
+<link rel="stylesheet" href="./ai.css" />
+</head>
+<body>
+  <header class="top">
+    <a class="back" href="./index.html" aria-label="返回">←</a>
+    <div class="brand"><span>✨</span> AI 试衣 <small>Kolors</small></div>
+    <a class="link-sm" href="./ar.html">AR</a>
+  </header>
+
+  <main class="wrap">
+    <section class="note">
+      <p>免费试用 Hugging Face <strong>Kwai Kolors</strong>。高峰可能排队；国内可能需要代理才能访问 HF。</p>
+      <p class="privacy">📷 人像与服装图会发送至 Hugging Face（Kolors Space）生成，<strong>不经过本站服务器</strong>。</p>
+    </section>
+
+    <!-- Person -->
+    <section class="card">
+      <h3>1. 人物照片 <span class="hint">建议全身站立照</span></h3>
+      <div id="personCache" class="thumbs" aria-label="最近使用的人物照"></div>
+      <div class="row-btns">
+        <label class="btn primary file-btn">
+          相册上传
+          <input id="personFile" type="file" accept="image/*" hidden />
+        </label>
+        <label class="btn file-btn">
+          拍照
+          <input id="personCam" type="file" accept="image/*" capture="user" hidden />
+        </label>
+      </div>
+      <div id="personPreview" class="preview empty">
+        <span>尚未选择人物照片</span>
+      </div>
+    </section>
+
+    <!-- Garment -->
+    <section class="card">
+      <h3>2. 选择服装</h3>
+      <div id="garmentSamples" class="garments"></div>
+      <div id="garmentDrop" class="drop">
+        <input id="garmentFile" type="file" accept="image/*" hidden />
+        <span>拖入或点击上传服装图（PNG 透明底更佳）</span>
+      </div>
+      <div id="garmentPreview" class="preview empty sm">
+        <span>默认：白色连衣裙</span>
+      </div>
+    </section>
+
+    <!-- Action -->
+    <section class="card action">
+      <button id="btnTry" class="btn primary xl" disabled>开始试衣</button>
+      <div id="status" class="status idle" role="status">准备就绪</div>
+      <p class="fallback">
+        若长时间失败，可到
+        <a href="https://huggingface.co/spaces/Kwai-Kolors/Kolors-Virtual-Try-On" target="_blank" rel="noopener">官方 Space</a>
+        手动试衣。
+      </p>
+    </section>
+
+    <!-- Result -->
+    <section class="card" id="resultCard" hidden>
+      <h3>试衣结果</h3>
+      <div id="resultPreview" class="preview result"></div>
+      <div class="row-btns">
+        <a id="btnDownload" class="btn primary" download="ai-tryon.webp" href="#">保存图片</a>
+        <button id="btnRetry" class="btn" type="button">再试一次</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+  <script type="module" src="./src/ai-tryon.js"></script>
+</body>
+</html>
