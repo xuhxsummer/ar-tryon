@@ -1,0 +1,11 @@
+{
+  "name": "ar-tryon",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Web AR 虚拟试衣 Demo（MediaPipe Pose + Image Segmenter，零构建）",
+  "scripts": {
+    "start": "python3 -m http.server 5177 --bind 127.0.0.1",
+    "gen:garments": "python3 tools_gen_garments.py",
+    "gen:dress": "python3 tools_extract_dress.py"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "id": "tee_navy_stripe",
+  "name": "海军条纹短袖",
+  "file": "tee_navy_stripe.png",
+  "category": "top",
+  "anchor": "shoulders",
+  "width": 512,
+  "height": 720,
+  "naturalShoulderWidth": 240,
+  "points": {
+    "leftShoulder": [
+      136,
+      120
+    ],
+    "rightShoulder": [
+      376,
+      120
+    ],
+    "leftHip": [
+      152,
+      470
+    ],
+    "rightHip": [
+      360,
+      470
+    ]
+  },
+  "neck": [
+    256,
+    104
+  ],
+  "thumbColor": "#283c6e"
+}

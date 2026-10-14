@@ -1,0 +1,33 @@
+{
+  "id": "tee_red",
+  "name": "红色T恤",
+  "file": "tee_red.png",
+  "category": "top",
+  "anchor": "shoulders",
+  "width": 512,
+  "height": 720,
+  "naturalShoulderWidth": 240,
+  "points": {
+    "leftShoulder": [
+      136,
+      120
+    ],
+    "rightShoulder": [
+      376,
+      120
+    ],
+    "leftHip": [
+      152,
+      470
+    ],
+    "rightHip": [
+      360,
+      470
+    ]
+  },
+  "neck": [
+    256,
+    104
+  ],
+  "thumbColor": "#de3a3e"
+}

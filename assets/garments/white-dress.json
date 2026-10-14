@@ -1,0 +1,35 @@
+{
+  "id": "white-dress",
+  "name": "白色一字肩连衣裙",
+  "file": "white-dress.png",
+  "category": "dress",
+  "anchor": "shoulders",
+  "source": "用户提供商品照片（自动抠图）",
+  "width": 1013,
+  "height": 1040,
+  "naturalShoulderWidth": 452,
+  "sleeveFollow": false,
+  "points": {
+    "leftShoulder": [
+      211,
+      84
+    ],
+    "rightShoulder": [
+      663,
+      84
+    ],
+    "leftHip": [
+      221,
+      525
+    ],
+    "rightHip": [
+      651,
+      525
+    ]
+  },
+  "neck": [
+    436,
+    40
+  ],
+  "thumbColor": "#f3f1ec"
+}

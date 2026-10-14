@@ -1,0 +1,33 @@
+{
+  "id": "dress_rose",
+  "name": "玫瑰连衣裙",
+  "file": "dress_rose.png",
+  "category": "dress",
+  "anchor": "shoulders",
+  "width": 512,
+  "height": 720,
+  "naturalShoulderWidth": 240,
+  "points": {
+    "leftShoulder": [
+      136,
+      120
+    ],
+    "rightShoulder": [
+      376,
+      120
+    ],
+    "leftHip": [
+      164,
+      420
+    ],
+    "rightHip": [
+      348,
+      420
+    ]
+  },
+  "neck": [
+    256,
+    104
+  ],
+  "thumbColor": "#ec7896"
+}
